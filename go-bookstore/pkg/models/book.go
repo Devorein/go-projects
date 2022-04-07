@@ -45,10 +45,3 @@ func DeleteBook(Id int64) Book {
 	db.Where("ID=?", Id).Delete(book)
 	return book
 }
-
-func UpdateBook(Id int64, payload interface{}) Book {
-	var book Book
-	db.Where("ID=?", Id).Update(payload)
-	db.Where("ID=?", Id).Find(&book)
-	return book
-}

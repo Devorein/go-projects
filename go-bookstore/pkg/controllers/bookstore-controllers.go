@@ -64,11 +64,25 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error while parsing")
 	}
 
-	var payload models.Book
+	book, db := models.GetBookById(bookId)
+	var payload = &models.Book{}
+
 	utils.ParseBody(r, payload)
 
-	models.UpdateBook(bookId, payload)
-	book, _ := models.GetBookById(bookId)
+	if payload.Author != "" {
+		book.Author = payload.Author
+	}
+
+	if payload.Name != "" {
+		book.Name = payload.Name
+	}
+
+	if payload.Publication != "" {
+		book.Publication = payload.Publication
+	}
+
+	db.Save(&book)
+
 	res, _ := json.Marshal(book)
 
 	w.Header().Set("Content-Type", "application/json")
