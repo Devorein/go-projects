@@ -1,3 +1,6 @@
 **/*.exe
+**/*.zip
+**/*.txt
 .env
 dataset.csv
+main
